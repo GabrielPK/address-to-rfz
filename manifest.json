@@ -1,58 +1,19 @@
-// manifest.json
 {
   "manifest_version": 3,
   "name": "My First Extension",
   "version": "1.0",
   "description": "A basic Chrome extension",
   "permissions": [
-    "activeTab"
+    "scripting"
   ],
-  "action": {
-    "default_popup": "popup.html"
-  },
-  "icons": {
-    "16": "icon16.png",
-    "48": "icon48.png",
-    "128": "icon128.png"
-  }
-}
-// popup.html
-<!DOCTYPE html>
-<html>
-<head>
-  <title>My Extension</title>
-  <style>
-    body {
-      width: 300px;
-      padding: 10px;
-}
-    button {
-      margin: 5px;
-      padding: 8px;
-}
-  </style>
-</head>
-<body>
-  <h2>My Extension</h2>
-  <button id="actionButton">Click Me!</button>
-  <script src="popup.js"></script>
-</body>
-</html>
-
-// popup.js
-document.getElementById('actionButton').addEventListener('click', async () => {
-  // Get the active tab
-  const [tab
-  ] = await chrome.tabs.query({ active: true, currentWindow: true
-  });
-  
-  // Execute script in the active tab
-  chrome.scripting.executeScript({
-    target: { tabId: tab.id
-    },
-    function: () => {
-      // This code runs in the context of the webpage
-      alert('Hello from the extension!');
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content.js"
+      ]
     }
-  });
-});
+  ]
+}
